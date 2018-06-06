@@ -1,5 +1,11 @@
 # Mesavolt/SimpleCacheBundle
 
+
+
+[![Latest Stable Version](https://poser.pugx.org/mesavolt/simple-cache-bundle/v/stable)](https://packagist.org/packages/mesavolt/simple-cache-bundle)
+[![License](https://poser.pugx.org/mesavolt/simple-cache-bundle/license)](https://packagist.org/packages/mesavolt/simple-cache-bundle)
+
+
 Integrate [`mesavolt/simple-cache`](https://packagist.org/packages/mesavolt/simple-cache)
 into your Symfony app.
 
