@@ -1,0 +1,37 @@
+{
+    "name": "mesavolt/simple-cache-bundle",
+    "description": "Symfony integration for mesavolt/simple-cache",
+    "keywords": ["simple", "cache", "simple-cache", "bundle"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "MesaVolt",
+            "email": "contact@mesavolt.com"
+        }
+    ],
+    "type": "symfony-bundle",
+    "config": {
+        "sort-packages": true
+    },
+    "require": {
+        "php": ">=7.1",
+        "mesavolt/simple-cache": "^0.0.1",
+        "symfony/config": "^3.3||^4.1",
+        "symfony/dependency-injection": "^3.3||^4.1",
+        "symfony/http-kernel": "^3.3||^4.1"
+    },
+	"require-dev": {
+        "php-coveralls/php-coveralls": "^2.1",
+        "phpunit/phpunit": "^7.2"
+    },
+	"autoload": {
+        "psr-4": {
+            "Mesavolt\\SimpleCacheBundle\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Mesavolt\\Tests\\": "Tests/"
+        }
+    }
+}

@@ -1,0 +1,11 @@
+services:
+    Mesavolt\SimpleCache:
+        class: Mesavolt\SimpleCache
+        arguments:
+            $cacheDir: '%simple_cache.cache_dir%'
+            $namespace: '%simple_cache.namespace%'
+        public: false
+
+    mesavolt.simple_cache:
+        alias: Mesavolt\SimpleCache
+        public: true
