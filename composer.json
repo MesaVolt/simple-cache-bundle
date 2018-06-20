@@ -15,7 +15,7 @@
     },
     "require": {
         "php": ">=7.1",
-        "mesavolt/simple-cache": "^0.0.1",
+        "mesavolt/simple-cache": "^0.0.2",
         "symfony/config": "^3.3||^4.1",
         "symfony/dependency-injection": "^3.3||^4.1",
         "symfony/http-kernel": "^3.3||^4.1"
