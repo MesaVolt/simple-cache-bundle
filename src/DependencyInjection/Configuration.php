@@ -28,8 +28,13 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root(self::ROOT_ALIAS);
+        $treeBuilder = new TreeBuilder(self::ROOT_ALIAS);
+
+        // symfony =< 4.1 compatibility
+        // taken from https://github.com/sensiolabs/SensioFrameworkExtraBundle/pull/594/files
+        $rootNode = method_exists($treeBuilder, 'getRootNode')
+            ? $treeBuilder->getRootNode()
+            : $treeBuilder->root(self::ROOT_ALIAS);
 
         $rootNode
             ->children()
