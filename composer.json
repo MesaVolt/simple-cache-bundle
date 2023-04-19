@@ -14,16 +14,17 @@
         "sort-packages": true
     },
     "require": {
-        "php": ">=7.1",
-        "mesavolt/simple-cache": "^1.0.0"
+        "php": ">=7.4",
+        "mesavolt/simple-cache": "^2.0"
     },
 	"require-dev": {
         "php-coveralls/php-coveralls": "^2.1",
         "phpunit/phpunit": "^7.2",
-        "roave/security-advisories": "dev-master",
-        "symfony/config": "^3.3||^4.1",
-        "symfony/dependency-injection": "^4.1.12",
-        "symfony/http-kernel": "^3.3||^4.1"
+        "roave/security-advisories": "dev-latest",
+        "symfony/config": "^5.4",
+        "symfony/dependency-injection": "^5.4",
+        "symfony/framework-bundle": "^5.4",
+        "symfony/http-kernel": "^5.4"
     },
 	"autoload": {
         "psr-4": {
@@ -32,7 +33,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Mesavolt\\Tests\\": "Tests/"
+            "Tests\\": "tests/"
         }
     }
 }
