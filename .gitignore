@@ -6,3 +6,4 @@ composer.lock
 
 /coverage.xml
 /coverage
+/var
