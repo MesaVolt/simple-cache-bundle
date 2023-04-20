@@ -19,7 +19,7 @@
     },
 	"require-dev": {
         "php-coveralls/php-coveralls": "^2.1",
-        "phpunit/phpunit": "^7.2",
+        "phpunit/phpunit": "^9.6",
         "roave/security-advisories": "dev-latest",
         "symfony/config": "^5.4",
         "symfony/dependency-injection": "^5.4",
