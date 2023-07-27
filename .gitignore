@@ -7,3 +7,4 @@ composer.lock
 /coverage.xml
 /coverage
 /var
+.phpunit.result.cache
