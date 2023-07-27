@@ -15,7 +15,7 @@
     },
     "require": {
         "php": ">=7.4",
-        "mesavolt/simple-cache": "^2.1"
+        "mesavolt/simple-cache": "^2.2"
     },
 	"require-dev": {
         "php-coveralls/php-coveralls": "^2.1",
