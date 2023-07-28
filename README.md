@@ -70,10 +70,10 @@ class AppKernel extends Kernel
 
 The following options are available to customize the behavior of the bundle's cache service :
 
-| Option name            | Default value        | Role                               |
-| ---------------------- | -------------------- | -----------------------------------|
-| simple_cache.cache_dir | `%kernel.cache_dir%` | Where the cache is written to disk |
-| simple_cache.namespace | `simple-cache`       | Default cache namespace            |
+| Option name             | Default value        | Role                               |
+|-------------------------|----------------------|------------------------------------|
+| simple_cache.cache_dir  | `%kernel.cache_dir%` | Where the cache is written to disk |
+| simple_cache.namespaces | `simple-cache`       | Default cache namespace            |
 
 
 ### Applications that don't use Symfony Flex
@@ -82,7 +82,9 @@ Create `config/services/simple_cache.yaml` and tweak its content :
 
 ```yaml
 simple_cache:
-    namespace: mca-cache
+    namespaces: 
+      - default
+      - specific
     cache_dir: /tmp/cache
 
 ```
@@ -93,15 +95,21 @@ Add this to your `app/config/config.yml` file and tweak the options :
 
 ```yaml
 simple_cache:
-    namespace: mca-cache
+    namespaces:
+      - default
+      - specific
     cache_dir: /tmp/cache
 ```
 
 
 ## Usage
 
-Inject the `Mesavolt\SimpleCache` service into your services and controllers
-(or get the `mesavolt.simple_cache` service from the container) :
+To retrieve a `Mesavolt\SimpleCache` instance, you can:
+
+- inject the cache attached to the first namespace from the `namespaces` option by type-hinting `Mesavolt\SimpleCache`
+- get the `mesavolt.simple_cache.default` or `mesavolt.simple_cache.specific` services from the container,
+- inject the `Mesavolt\SimpleCacheBundle\SimpleCachePool` service and get a cache by its namespace with
+the `getCache($namespace)` method
 
 ```php
 <?php
@@ -110,17 +118,41 @@ namespace App;
 
 
 use Mesavolt\SimpleCache;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Mesavolt\SimpleCacheBundle\SimpleCachePool;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;use Symfony\Component\HttpFoundation\Response;
 
 class HomeController extends AbstractController
 {
-    public function index(SimpleCache $cache)
+    public function demo1(SimpleCache $cache): Response
     {
+        // $cache is the cache configured with the 'default' namespace
         $time = $cache->get('val', function () {
             return time();
         }, SimpleCache::TTL_30_MINUTES);
         
-        return $this->render('home/index.html.twig', [
+        return $this->render('home/demo.html.twig', [
+            'time' => $time
+        ]);
+    }
+
+    public function demo2(): Response
+    {
+        $time = $this->get('mesavolt.simple_cache.default')->get('val', function () {
+            return time();
+        }, SimpleCache::TTL_30_MINUTES);
+
+        return $this->render('home/demo.html.twig', [
+            'time' => $time
+        ]);
+    }
+
+    public function demo3(SimpleCachePool $pool): Response
+    {
+        $time = $pool->getCache('specific')->get('val', function () {
+            return time();
+        }, SimpleCache::TTL_30_MINUTES);
+
+        return $this->render('home/demo.html.twig', [
             'time' => $time
         ]);
     }
