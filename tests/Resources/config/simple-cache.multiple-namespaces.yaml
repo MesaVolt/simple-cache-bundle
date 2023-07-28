@@ -1,0 +1,4 @@
+simple_cache:
+  namespaces:
+    - namespace1
+    - namespace2

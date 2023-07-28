@@ -14,10 +14,23 @@ class TestKernel extends Kernel
 {
     use MicroKernelTrait;
 
-    public function __construct(string $environment = '', bool $debug = true)
+    private string $configFile;
+    private string $cacheDir;
+
+    public function __construct(string $environment = 'test', bool $debug = true)
     {
-        parent::__construct($environment ?: $_ENV['APP_ENV'] ?? 'test', $debug);
+        parent::__construct($environment, $debug);
+
+        $this->configFile = __DIR__.'/../Resources/config/simple-cache.default.yaml';
+        $this->cacheDir = uniqid("$this->environment-", true);
     }
+
+    public function setConfigFile(string $configFile): void
+    {
+        $this->configFile = $configFile;
+    }
+
+
 
     public function registerBundles(): iterable
     {
@@ -37,12 +50,17 @@ class TestKernel extends Kernel
     {
         $container->setParameter('container.dumper.inline_class_loader', true);
 
-        $loader->load(__DIR__.'/../Resources/config/packages/*.yaml', 'glob');
-        // $loader->load(__DIR__ . '/../Resources/config/full-config.yaml');
+        $loader->load(__DIR__.'/../Resources/config/packages/framework.yaml', 'yaml');
+        $loader->load($this->configFile);
     }
 
     public function getProjectDir(): string
     {
         return realpath(__DIR__.'/../..');
+    }
+
+    public function getCacheDir(): string
+    {
+        return $this->getProjectDir() . "/var/cache/$this->cacheDir";
     }
 }

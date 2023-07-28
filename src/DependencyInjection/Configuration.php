@@ -15,7 +15,7 @@ class Configuration implements ConfigurationInterface
 {
     public const ROOT_ALIAS = 'simple_cache';
 
-    protected $defaultCacheDir;
+    protected string $defaultCacheDir;
 
     public function __construct(string $cacheDir)
     {
@@ -32,14 +32,22 @@ class Configuration implements ConfigurationInterface
 
         // symfony =< 4.1 compatibility
         // taken from https://github.com/sensiolabs/SensioFrameworkExtraBundle/pull/594/files
-        $rootNode = method_exists($treeBuilder, 'getRootNode')
-            ? $treeBuilder->getRootNode()
-            : $treeBuilder->root(self::ROOT_ALIAS);
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
             ->children()
                 ->scalarNode('cache_dir')->defaultValue($this->defaultCacheDir)->end()
-                ->scalarNode('namespace')->defaultValue('simple-cache')->end()
+                ->arrayNode('namespaces')
+                    ->fixXmlConfig('namespace')
+                    ->addDefaultChildrenIfNoneSet()
+                    ->scalarPrototype()
+                        ->defaultValue('simple-cache')
+                    ->end()
+                ->end()
+                ->scalarNode('namespace')
+                    ->defaultValue('simple-cache')
+                    ->setDeprecated('The "%node%" option is deprecated, use the "namespaces" option instead')
+                ->end()
             ->end();
 
         return $treeBuilder;
