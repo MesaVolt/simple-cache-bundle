@@ -29,9 +29,6 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder(self::ROOT_ALIAS);
-
-        // symfony =< 4.1 compatibility
-        // taken from https://github.com/sensiolabs/SensioFrameworkExtraBundle/pull/594/files
         $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
@@ -46,7 +43,7 @@ class Configuration implements ConfigurationInterface
                 ->end()
                 ->scalarNode('namespace')
                     ->defaultValue('simple-cache')
-                    ->setDeprecated('The "%node%" option is deprecated, use the "namespaces" option instead')
+                    ->setDeprecated('The "%node%" option is deprecated, use the "namespaces" option instead', '2.3.0')
                 ->end()
             ->end();
 
